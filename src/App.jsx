@@ -9,14 +9,17 @@ const PRODUCTS = [
                   { category: "Vegetables", price: "$2", stocked: true, name: "Spinach" },
                   { category: "Vegetables", price: "$4", stocked: false, name: "Pumpkin" },
                   { category: "Vegetables", price: "$1", stocked: true, name: "Peas" },
-                  { category: "Fruits", price: "$2", stocked: true, name: "Blue berries" },
                 ]
 function FilterableProductTable({products}) {
- 
+    const [textFilter,setTextFilter] = useState('');
+    const [onStockOnly,setOnStockOnly] = useState(false);
   return (
     <div>
-      <SearchBar/>
-      <ProductTable products={products} />
+      <SearchBar textFilter={textFilter} setTextFilter={setTextFilter} 
+                 onStockOnly={onStockOnly} setOnStockOnly={setOnStockOnly} />
+      <ProductTable  products={products} 
+                    textFilter={textFilter}
+                    onStockOnly={onStockOnly}/>
     </div>
   )
 }

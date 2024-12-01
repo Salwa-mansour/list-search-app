@@ -18,25 +18,36 @@ function ProductRow({product}){
         </tr>
     );
 }
-function ProductTable({products}){
+function ProductTable({products,textFilter,onStockOnly}){
     const rows =[];
     let lastCategory = null;
      // this code assume that product array already sorted by category
-    products.forEach((product) => {
-        if(product.category !== lastCategory){
-            rows.push(
-                <ProductCategoryRow 
-                category={product.category}
-                key={product.category} />
-            );
+     products.forEach((product) => {
+        if (
+         !product.name.toLowerCase().includes(
+            textFilter.toLowerCase()
+          ) 
+        ) {
+          return;
+        }
+        if (onStockOnly && !product.stocked) {
+          return;
+        }
+        if (product.category !== lastCategory) {
+          rows.push(
+            <ProductCategoryRow
+              category={product.category}
+              key={product.category} />
+          );
         }
         rows.push(
-            <ProductRow 
+          <ProductRow
             product={product}
             key={product.name} />
         );
         lastCategory = product.category;
-    });
+      });
+    
     
     return(
         <table>
